@@ -1,0 +1,12 @@
+.ipynb_checkpoints/
+/MillionSongSubset/
+/html/
+/notes/
+/pkls/
+
+*.pyc
+*~
+*api*
+Untitled*
+
+*.pkl
