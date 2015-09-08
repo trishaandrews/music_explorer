@@ -20,9 +20,10 @@ def unpickle(filename):
     return old_data
 
 basedir = "./pkls/"
+r_state = "8"
 userdict = unpickle(basedir + "userdict.pkl")
 
-kmeans = unpickle(basedir + "kmeans40.pkl")
+kmeans = unpickle(basedir + "kmeans40_"+r_state+".pkl")
 
 with open(basedir + "zscore_df_csv.csv", 'r') as tf:
     tracks = pd.read_csv(tf, index_col=0)
@@ -71,13 +72,13 @@ for k, v in userclusters.iteritems():
         print indcounts
         print indfreqs
 
-with open(basedir+"clustercounts.txt", 'w') as cc:
+with open(basedir+"clustercounts"+r_state+".txt", 'w') as cc:
     for clist in clustercounts:
         for c in clist:
             cc.write(str(c) + " ")
         cc.write("\n")
 
-with open(basedir+"clusterfreqs.txt", 'w') as cf:
+with open(basedir+"clusterfreqs"+r_state+".txt", 'w') as cf:
     for flist in clusterfreqs:
         for f in flist:
             cf.write(str(f) + " ")
