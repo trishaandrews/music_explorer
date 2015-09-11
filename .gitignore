@@ -3,10 +3,12 @@
 /html/
 /notes/
 /pkls/
+/venv/
 
 *.pyc
 *~
 *api*
 Untitled*
+*params*
 
 *.pkl
