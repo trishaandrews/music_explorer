@@ -14,7 +14,7 @@ def unpickle(filename):
     return old_data
 
 def make_recs_table(cur, conn):
-    cur.execute("CREATE TABLE recs ( id serial PRIMARY KEY, track_id text UNIQUE NOT NULL, title text, artist text, recommend integer, cluster integer);")
+    cur.execute("CREATE TABLE recs ( id serial PRIMARY KEY, track_id text UNIQUE NOT NULL, title text, artist text, recommend integer, cluster integer, cluster_new integer);")
     conn.commit()
 
 def populate_recs_table(cur, conn, infofile):
@@ -25,7 +25,7 @@ def populate_recs_table(cur, conn, infofile):
         for row in inforeader:
             #print row
             vals = tuple(row)
-            cur.execute("INSERT INTO recs VALUES ( %s, '%s', '%s', '%s', %s, %s );" %vals)
+            cur.execute("INSERT INTO recs VALUES ( %s, '%s', '%s', '%s', %s, %s, %s );" %vals)
     conn.commit()
 
 if __name__ == "__main__":
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     cur = conn.cursor()
     
     make_recs_table(cur, conn)
-    populate_recs_table(cur, conn, "./pkls/trackinfo.csv")
+    populate_recs_table(cur, conn, "./pkls/trackinfo_new.csv")
 
     cur.close()
     conn.close()

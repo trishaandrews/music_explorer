@@ -23,7 +23,7 @@ basedir = "./pkls/"
 r_state = "None"
 userdict = unpickle(basedir + "userdict.pkl")
 
-kmeans = unpickle(basedir + "kmeans40_"+r_state+".pkl")
+kmeans = unpickle(basedir + "kmeans40_"+r_state+"_2.pkl")
 
 with open(basedir + "zscore_df_csv.csv", 'r') as tf:
     tracks = pd.read_csv(tf, index_col=0)
@@ -34,16 +34,19 @@ listencounts = []
 for k, v in userdict.iteritems():
     listencounts.append(len(v))
 
-print sorted(listencounts)[-15:]
+print len(listencounts), sorted(listencounts)[-15:]
 
 t1 = time.time()
+t2 = t1
 count = 0
 userclusters = {}
 for user, trackidlist in userdict.iteritems():
-    if count == 100000:
-        print "100000!"
+    if count == 50000:
+        print "50000!"
+        print "round time:", time.time()-t2
         print "elapsed time:", time.time()-t1
         count = 0
+        t2 = time.time()
     userclusters[user] = []
     for trackid in trackidlist:
         track = tracks[tracks["track_id"] == trackid]
@@ -72,13 +75,13 @@ for k, v in userclusters.iteritems():
         print indcounts
         print indfreqs
 
-with open(basedir+"clustercounts"+r_state+".txt", 'w') as cc:
+with open(basedir+"clustercounts"+r_state+"_2.txt", 'w') as cc:
     for clist in clustercounts:
         for c in clist:
             cc.write(str(c) + " ")
         cc.write("\n")
 
-with open(basedir+"clusterfreqs"+r_state+".txt", 'w') as cf:
+with open(basedir+"clusterfreqs"+r_state+"_2.txt", 'w') as cf:
     for flist in clusterfreqs:
         for f in flist:
             cf.write(str(f) + " ")

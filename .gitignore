@@ -3,7 +3,7 @@
 /html/
 /notes/
 /pkls/
-/venv/
+
 
 *.pyc
 *~
@@ -12,3 +12,5 @@ Untitled*
 *params*
 
 *.pkl
+*.txt
+*.zip
