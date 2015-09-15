@@ -20,7 +20,7 @@ def unpickle(filename):
     return old_data
 
 basedir = "./pkls/"
-r_state = "8"
+r_state = "None"
 userdict = unpickle(basedir + "userdict.pkl")
 
 kmeans = unpickle(basedir + "kmeans40_"+r_state+".pkl")

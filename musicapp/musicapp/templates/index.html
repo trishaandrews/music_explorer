@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="allbox">
 <div style="text-align: center;">
-  <h1>Song Explorer!</h1>
+  <h1>Song Explore!</h1>
   <br>
   <h2>Explore new songs that feel like the songs you know</h2>
   <p>Choose up to 10 songs to get recommendations<br>Start typing an artist or song title and the top 10 options will appear</p>
@@ -19,4 +20,11 @@
     <p id="reccontent">No recommendations yet</p>
   </div> 
 </div>
+</div>
+
+<footer class="footer">
+  <p><a href="{{ url_for('about') }}">
+  About</a></p>
+</footer>
+
 {% endblock %}

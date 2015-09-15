@@ -2,6 +2,7 @@ from flask import Flask, Response, jsonify, render_template, request, redirect, 
 from wtforms import TextField, Form
 from  sqlalchemy.sql.expression import func, select
 import json
+import time
 
 from musicapp.database import db_session, Recs
 
@@ -9,7 +10,7 @@ LIMIT = 10 #change html description p if you change this
 
 app = Flask(__name__)
 
-cluster_inputs = []
+#cluster_inputs = []
 
 
 class SearchForm(Form):
@@ -30,9 +31,11 @@ def autocomplete():
                         "cluster" : v.cluster})
     return Response(json.dumps(results))
     
-def get_recs():
+def get_recs(cluster_inputs):
     if len(cluster_inputs) < 1:
-        lim = 0
+        app.logger.debug("No selected songs")
+        results = [{"value": "No songs selected"}]
+        return results
     else:
         lim = int(LIMIT/len(cluster_inputs))
     db_vals = []
@@ -50,25 +53,26 @@ def get_recs():
 def add_entry():
     form_vals = request.form
     app.logger.debug(form_vals)
-    cluster = form_vals.get('cluster')
-    cluster_inputs.append(cluster)
-    results = get_recs()
-    app.logger.debug(results)
+    clusters = form_vals.getlist('clusters[]')
+    clusters = [int(c) for c in clusters]
+    #app.logger.debug(clusters)
+    if len(clusters) > LIMIT:
+        results = [{"value": "Too many songs selected!"}]
+    else:
+        results = get_recs(clusters)
+        app.logger.debug(results)
     return Response(json.dumps(results))
     
-@app.route('/refresh_recs', methods=['GET', 'POST'])
-def refresh_recs():
-    results = get_recs()
-    return Response(json.dumps(results))
+@app.route('/about')
+def about():
+    return render_template('about.html')
     
 @app.route('/')
 def index():
-    global cluster_inputs
-    cluster_inputs = []
     form = SearchForm(request.form)
     return render_template('index.html', form=form)
  
-    
+
 #if __name__ == '__main__':
 #    port = int(os.environ.get("PORT", 5000))
 #    app.run(host='0.0.0.0', port=port)
