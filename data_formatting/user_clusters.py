@@ -1,3 +1,12 @@
+############################################
+# 
+# Assign each user listen to a cluster
+# Count and determine frequency of listens per cluster
+# (person x listened to 3 songs from cluster 12
+#  10% of their total listens were in cluster 12)
+#
+############################################
+
 import time
 import pickle
 import scipy
@@ -19,7 +28,7 @@ def unpickle(filename):
         old_data = pickle.load(picklefile)
     return old_data
 
-basedir = "./pkls/"
+basedir = "../pkls/"
 r_state = "None"
 userdict = unpickle(basedir + "userdict.pkl")
 

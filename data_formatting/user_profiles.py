@@ -1,3 +1,10 @@
+##################################
+#
+# Create a dictionary of users and the track_ids of their known listens
+# Don't include tracks that are known mismatches with their artist/title
+#
+##################################
+
 import time
 import pickle
 import scipy
@@ -26,10 +33,11 @@ print bad_tracks[:5]
 
 btset = set(bad_tracks)
 
+basedir = "../pkls/"
+
 with open(basedir + "titles_csv3.csv", 'r') as tf:
     titles = pd.read_csv(tf, index_col=0)
-#titles = unpickle("titles_df.pkl")
-#print titles.head()
+
 users = []
 songs = []
 userdict = {}
@@ -67,6 +75,6 @@ for k, v in userdict.iteritems():
 
 print sorted(listencounts)[-15:]
 
-pickle_stuff("userdict.pkl", userdict)
+pickle_stuff(basedir+"userdict.pkl", userdict)
 
 
